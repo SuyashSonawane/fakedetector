@@ -10,7 +10,8 @@ import torch
 from torch.utils.model_zoo import load_url
 from PIL import Image
 import matplotlib.pyplot as plt
-
+from flask_cors import CORS, cross_origin
+from flask import jsonify
 
 # """
 # Choose an architecture between
@@ -65,7 +66,9 @@ def predictImage(image):
         faces_pred = torch.sigmoid(
             net(faces_t.to(device))).cpu().numpy().flatten()
 
-    return 'Score for face: {:.4f}'.format(faces_pred[0])
+    d = {'result': str(faces_pred[0])}
+
+    return jsonify(d)
 
 
 """
@@ -122,19 +125,16 @@ def predictVideo(video):
     with torch.no_grad():
         faces_real_pred = net(faces_real_t.to(device)).cpu().numpy().flatten()
 
-    return 'Average score for REAL video: {:.4f}'.format(
-        expit(faces_real_pred.mean()))
+    d = {'result': str(faces_real_pred.mean())}
+
+    return jsonify(d)
 
 
 app = Flask(__name__)
-
+CORS(app)
 UPLOAD_FOLDER = 'uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-
-
-@app.route('/form')
-def form():
-    return render_template('form.html')
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 
 @app.route('/uploadI', methods=['POST', 'GET'])
@@ -161,4 +161,21 @@ def uploadV():
         return predictVideo(fname)
 
 
-app.run(host='localhost', port=5000, debug=True)
+@app.route('/upload', methods=['POST', 'GET'])
+@cross_origin()
+def upload():
+    if request.method == 'POST':
+        print(request.files)
+        f = request.files['File']
+        # f.save(secure_filename(f.filename))
+        fname = os.path.join(
+            app.config['UPLOAD_FOLDER'], secure_filename(f.filename))
+        # f.save(fname)
+        return 'ok'
+
+    if request.method == "GET":
+        d = {'name': 'ramu'}
+        return jsonify(d)
+
+
+app.run(host='localhost', port=3000, debug=True)
