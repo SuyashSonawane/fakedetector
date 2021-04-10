@@ -22,4 +22,6 @@ dependencies:
     - tensorboardx==2.0
     - efficientnet-pytorch
     - scikit-learn
+    - flask==1.1.2
+    - flask-cors==3.0.10
 

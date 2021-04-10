@@ -1,9 +1,9 @@
 -f https://download.pytorch.org/whl/torch_stable.html
-torch==1.5.0+cpu
-torchvision==0.6.0+cpu
+torch==1.8.1+cpu 
+torchvision==0.9.1+cpu
+av==6.2.0
 async-generator==1.10
 autopep8==1.5.4
-av==6.2.0
 black==19.10b0
 certifi==2020.12.5
 click==7.1.2
