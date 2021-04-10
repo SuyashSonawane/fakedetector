@@ -5,6 +5,8 @@ document.querySelector('#videoUpload').addEventListener('change', event => {
     handleVideoUpload(event)
 })
 
+const API = "https://cdacfakeapidocker.azurewebsites.net/"
+
 const handleImageUpload = event => {
     const files = event.target.files
     const formData = new FormData()
@@ -13,7 +15,7 @@ const handleImageUpload = event => {
     console.log(formData)
     document.querySelector(".img").style.display = 'block'
 
-    fetch('http://localhost:3000/uploadI', {
+    fetch(API + 'uploadI', {
         method: 'POST',
         body: formData
     })
@@ -39,7 +41,7 @@ const handleVideoUpload = event => {
     console.log(formData)
     document.querySelector(".img").style.display = 'block'
 
-    fetch('http://localhost:3000/uploadV', {
+    fetch(API + 'uploadV', {
         method: 'POST',
         body: formData
     })

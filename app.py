@@ -178,7 +178,12 @@ def upload():
         return jsonify(d)
 
 
+@app.route("/", methods=['GET'])
+def hello():
+    return 'The API is UP'
+
+
 if __name__ == "__main__":
-    app.run()
+    app.run(host='0.0.0.0')
 
 # app.run(host='localhost', port=3000, debug=True)
