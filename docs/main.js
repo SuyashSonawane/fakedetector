@@ -12,7 +12,7 @@ const handleImageUpload = event => {
     const formData = new FormData()
     formData.append('File', files[0])
 
-    console.log(formData)
+    // console.log(formData)
     document.querySelector(".img").style.display = 'block'
 
     fetch(API + 'uploadI', {
@@ -21,7 +21,7 @@ const handleImageUpload = event => {
     })
         .then(response => response.json())
         .then(data => {
-            console.log(data)
+            // console.log(data)
             document.querySelector('.img').style.display = 'none'
             if (data.result > 0.5)
                 alert('fake')
@@ -29,7 +29,7 @@ const handleImageUpload = event => {
                 alert('real')
         })
         .catch(error => {
-            console.error(error)
+            // console.error(error)
             alert(error)
         })
 }
@@ -38,7 +38,7 @@ const handleVideoUpload = event => {
     const formData = new FormData()
     formData.append('File', files[0])
 
-    console.log(formData)
+    // console.log(formData)
     document.querySelector(".img").style.display = 'block'
 
     fetch(API + 'uploadV', {
@@ -47,7 +47,7 @@ const handleVideoUpload = event => {
     })
         .then(response => response.json())
         .then(data => {
-            console.log(data)
+            // console.log(data)
             document.querySelector('.img').style.display = 'none'
             if (data.result > 0.5)
                 alert('fake')
@@ -55,7 +55,7 @@ const handleVideoUpload = event => {
                 alert('real')
         })
         .catch(error => {
-            console.error(error)
+            // console.error(error)
             alert(error)
         })
 }
