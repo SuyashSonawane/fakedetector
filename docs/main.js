@@ -28,10 +28,11 @@ const handleImageUpload = event => {
         .then(data => {
             // console.log(data)
             document.querySelector('.img').style.display = 'none'
-            if (data.result > 0.5)
-                alert('fake')
-            else
-                alert('real')
+            alert(data.result)
+            // if (data.result > 0.5)
+            //     alert('fake')
+            // else
+            //     alert('real')
         })
         .catch(error => {
             // console.error(error)
@@ -60,10 +61,11 @@ const handleVideoUpload = event => {
         .then(data => {
             // console.log(data)
             document.querySelector('.img').style.display = 'none'
-            if (data.result > 0.5)
-                alert('fake')
-            else
-                alert('real')
+            alert(data.result)
+            // if (data.result > 0.5)
+            //     alert('fake')
+            // else
+            //     alert('real')
         })
         .catch(error => {
             // console.error(error)
