@@ -12,11 +12,7 @@ const handleImageUpload = event => {
     const files = event.target.files
     const formData = new FormData()
     formData.append('File', files[0])
-    if (files[0].size > 5000000) {
-        alert("File too big")
-        document.querySelector('.img').style.display = 'none'
-        return
-    }
+    
 
     // console.log(formData)
     document.querySelector(".img").style.display = 'block'
@@ -48,12 +44,7 @@ const handleVideoUpload = event => {
     // console.log(formData)
     document.querySelector(".img").style.display = 'block'
 
-    if (files[0].size > 5000000) {
-        alert("File too big")
-        document.querySelector('.img').style.display = 'none'
-        return
-    }
-
+    
     fetch(API + 'uploadV', {
         method: 'POST',
         body: formData
@@ -95,9 +86,6 @@ function sendLink() {
                 // else
                 //     alert('real')
             })
-            .catch(error => {
-                // console.error(error)
-                alert(error)
-            })
+
     }
 }
