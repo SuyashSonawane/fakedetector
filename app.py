@@ -12,6 +12,7 @@ from PIL import Image
 import matplotlib.pyplot as plt
 from flask_cors import CORS, cross_origin
 from flask import jsonify
+from twitterdl import TwitterDownloader
 
 # """
 # Choose an architecture between
@@ -115,7 +116,7 @@ face_extractor = FaceExtractor(video_read_fn=video_read_fn, facedet=facedet)
 
 def predictVideo(video):
     vid_real_faces = face_extractor.process_video(
-        'uploads/videoplayback_1.mp4')
+        video)
 
     im_real_face = vid_real_faces[0]['faces'][0]
 
@@ -126,7 +127,7 @@ def predictVideo(video):
         faces_real_pred = net(faces_real_t.to(device)).cpu().numpy().flatten()
 
     d = {'result': str(faces_real_pred.mean())}
-
+    print(d)
     return jsonify(d)
 
 
@@ -135,6 +136,21 @@ CORS(app)
 UPLOAD_FOLDER = 'uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['CORS_HEADERS'] = 'Content-Type'
+
+
+@app.route('/link', methods=['POST', 'GET'])
+def link():
+    if request.method == 'POST':
+        link = request.get_json()['link']
+        tw = TwitterDownloader(link)
+        fname = tw.download()
+        # f = request.files['File']
+        # # f.save(secure_filename(f.filename))
+        # fname = os.path.join(
+        #     app.config['UPLOAD_FOLDER'], secure_filename(f.filename))
+        # f.save(fname)
+        return predictVideo(fname)
+        # return jsonify({"status": fname})
 
 
 @app.route('/uploadI', methods=['POST', 'GET'])
@@ -183,7 +199,11 @@ def hello():
     return 'The API is UP'
 
 
-if __name__ == "__main__":
-    app.run(host='0.0.0.0')
+# if __name__ == "__main__":
+#     app.run(host='0.0.0.0')
 
-# app.run(host='localhost', port=3000, debug=True)
+# Tw = TwitterDownloader("https://twitter.com/i/status/1388581577714720772")
+# print(Tw.download())
+
+
+app.run(host='localhost', port=3000, debug=True)
